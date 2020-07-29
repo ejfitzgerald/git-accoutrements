@@ -36,7 +36,9 @@ setup(
     package_dir={'': 'src'},
     packages=find_packages(where='src'),
     python_requires='>=3.5, <4',
-    install_requires=[],
+    install_requires=[
+        'colored',
+    ],
 
     extras_require={
         'dev': ['check-manifest'],
@@ -49,6 +51,7 @@ setup(
             'git-master=accoutrements.cmd.master:main',
             'git-tidy=accoutrements.cmd.tidy:main',
             'git-bugfix=accoutrements.cmd.bugfix:main',
+            'git-del=accoutrements.cmd.del:main',
         ],
     },
 
