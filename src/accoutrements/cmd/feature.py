@@ -12,9 +12,7 @@ def parse_commandline():
     return parser.parse_args()
 
 
-def main():
-    args = parse_commandline()
-
+def create_new_branch(prefix: str, args):
     remote = detect_upstream_remote()
     print(f'Upstream remote: {remote}')
 
@@ -23,7 +21,7 @@ def main():
     subprocess.check_call(cmd)
 
     # create the new branch
-    branch_name = f'feature/{args.name}'
+    branch_name = f'{prefix}/{args.name}'
     cmd = ['git', 'checkout', '-b', branch_name]
     subprocess.check_call(cmd)
 
@@ -35,3 +33,8 @@ def main():
     if args.push:
         cmd = ['git', 'push', '-u', 'origin', branch_name]
         subprocess.check_call(cmd)
+
+
+def main():
+    args = parse_commandline()
+    create_new_branch('feature', args)

@@ -48,6 +48,7 @@ setup(
             'git-feature=accoutrements.cmd.feature:main',
             'git-master=accoutrements.cmd.master:main',
             'git-tidy=accoutrements.cmd.tidy:main',
+            'git-bugfix=accoutrements.cmd.bugfix:main',
         ],
     },
 
