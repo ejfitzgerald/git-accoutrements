@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import os
 import argparse
 import subprocess
 
@@ -25,6 +26,14 @@ def create_new_branch(prefix: str, args: argparse.Namespace):
     branch_name = f'{prefix}/{base_name}'
     cmd = ['git', 'checkout', '-b', branch_name]
     subprocess.check_call(cmd)
+
+    # check to see if there are any working changse
+    cmd = ['git', 'diff', '--exit-code']
+    with open(os.devnull, 'w') as null_file:
+        exit_code = subprocess.call(cmd, stdout=null_file, stderr=subprocess.STDOUT)
+        if exit_code != 0:
+            print('Working changes detected, not resetting branch ref')
+            return
 
     # reset the feature branch on top of the remote upstream
     cmd = ['git', 'reset', '--hard', f'{remote}/master']
