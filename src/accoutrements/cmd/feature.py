@@ -5,14 +5,14 @@ import subprocess
 from accoutrements import detect_upstream_remote
 
 
-def parse_commandline():
+def parse_commandline() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
-    parser.add_argument('name', help='The name of the branch')
+    parser.add_argument('name', nargs='+', help='The name of the branch')
     parser.add_argument('-p', '--push', action='store_true', help='Push the new branch so that it is setup to track')
     return parser.parse_args()
 
 
-def create_new_branch(prefix: str, args):
+def create_new_branch(prefix: str, args: argparse.Namespace):
     remote = detect_upstream_remote()
     print(f'Upstream remote: {remote}')
 
@@ -21,7 +21,8 @@ def create_new_branch(prefix: str, args):
     subprocess.check_call(cmd)
 
     # create the new branch
-    branch_name = f'{prefix}/{args.name}'
+    base_name = '-'.join(args.name)
+    branch_name = f'{prefix}/{base_name}'
     cmd = ['git', 'checkout', '-b', branch_name]
     subprocess.check_call(cmd)
 
