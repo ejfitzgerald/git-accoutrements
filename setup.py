@@ -49,6 +49,7 @@ setup(
         'console_scripts': [
             'git-feature=accoutrements.cmd.feature:main',
             'git-master=accoutrements.cmd.master:main',
+            'git-chore=accoutrements.cmd.chore:main',
             'git-tidy=accoutrements.cmd.tidy:main',
             'git-bugfix=accoutrements.cmd.bugfix:main',
             'git-del=accoutrements.cmd.del:main',
