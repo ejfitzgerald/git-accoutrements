@@ -3,7 +3,7 @@ import os
 import argparse
 import subprocess
 
-from accoutrements import detect_upstream_remote
+from accoutrements import detect_upstream_remote, detect_master_branch
 
 
 def parse_commandline() -> argparse.Namespace:
@@ -35,8 +35,11 @@ def create_new_branch(prefix: str, args: argparse.Namespace):
             print('Working changes detected, not resetting branch ref')
             return
 
+    # detect the master branch that is used with this project
+    master_branch_name = detect_master_branch(remote)
+
     # reset the feature branch on top of the remote upstream
-    cmd = ['git', 'reset', '--hard', f'{remote}/master']
+    cmd = ['git', 'reset', '--hard', f'{remote}/{master_branch_name}']
     subprocess.check_call(cmd)
 
     # push if required
