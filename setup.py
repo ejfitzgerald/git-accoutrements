@@ -38,6 +38,7 @@ setup(
     python_requires='>=3.5, <4',
     install_requires=[
         'colored',
+        'toml',
     ],
 
     extras_require={
@@ -53,6 +54,7 @@ setup(
             'git-tidy=accoutrements.cmd.tidy:main',
             'git-bugfix=accoutrements.cmd.bugfix:main',
             'git-del=accoutrements.cmd.del:main',
+            'git-ditto=accoutrements.cmd.ditto:main',
         ],
     },
 
