@@ -2,7 +2,7 @@ import re
 import subprocess
 import sys
 
-STALE_REGEX = re.compile(r'(?:\*?\s+)?([\w/-]+)\s+[0-9a-f]+ (?:\[[\w/-]+(: gone)?\])?.*')
+STALE_REGEX = re.compile(r'(?:\*?\s+)?([\w/\-.]+)\s+[0-9a-f]+ (?:\[[\w/\-.]+(: gone)?])?.*')
 
 
 def detect_upstream_remote():
