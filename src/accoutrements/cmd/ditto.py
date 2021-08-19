@@ -19,6 +19,11 @@ ________  .__  __    __
 
 """
 
+SCAN_DIR_EXCEPTIONS = {
+    'node_modules',
+}
+
+
 @dataclass
 class DittoConfig:
     name: Optional[str] = None
@@ -55,7 +60,6 @@ def load_ditto_config() -> DittoConfig:
     if ditto_cfg_path is not None:
         with open(ditto_cfg_path, 'r') as cfg_file:
             ditto_cfg = toml.load(cfg_file)
-        print(ditto_cfg)
 
         user_data = ditto_cfg.get('user', {})
         cfg.name = user_data.get('name')
@@ -66,6 +70,9 @@ def load_ditto_config() -> DittoConfig:
 
 
 def clone_url(text) -> Tuple[str, str]:
+    if text in ('scan', 'update'):
+        return text, '.'
+
     match = re.match(r'.*?/(.*)\.git$', text)
     if match is None:
         print('Unable to parse the clone url')
@@ -77,26 +84,78 @@ def clone_url(text) -> Tuple[str, str]:
 def parse_commandline() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument('url', type=clone_url, help='The URL to make the clone')
+    parser.add_argument('--deep', action='store_true', help='Scan deeply')
     return parser.parse_args()
 
 
-def main():
-    args = parse_commandline()
-    cfg = load_ditto_config()
+def _filter_folder(root: str, path: str):
+    full_path = os.path.join(root, path)
 
-    url, destination_folder = args.url
+    if not os.path.isdir(full_path):
+        return False
 
-    # print a nice user header
-    print(HEADER)
+    if path in SCAN_DIR_EXCEPTIONS:
+        return False
 
-    # clone the folder
-    cmd = ['git', 'clone', url]
-    subprocess.check_call(cmd)
+    if path.startswith('.'):
+        return False
+
+    return True
+
+
+def _run_scan(args: argparse.Namespace, path: str):
+    scan_list = [path]
+    while len(scan_list) > 0:
+        current = scan_list.pop(0)
+
+        git_path = os.path.join(current, '.git')
+
+        # check to see if the current level is a git repo
+        if os.path.isdir(git_path):
+            yield current
+
+            # check to see if this git repo has git modules
+            has_git_modules = os.path.exists(os.path.join(current, '.gitmodules'))
+
+            # Determine if we should stop processing this branch. In the answer to this should be yes since we have
+            # found a git repo. However, if there are git modules then we should continue the search down. Alternatively
+            # if the user has specified the deep flag we continue searching
+            if has_git_modules or args.deep:
+                skip_current_level = False
+            else:
+                skip_current_level = True
+
+            # skip the level if we desire
+            if skip_current_level:
+                continue
+
+        # update the scan list
+        scan_list.extend(
+            map(
+                lambda x: os.path.join(current, x),  # add the current prefix
+                filter(
+                    lambda x: _filter_folder(current, x),
+                    os.listdir(current)
+                )
+            )
+        )
+
+
+def run_scan(args: argparse.Namespace, cfg: DittoConfig, search_folder: str):
+    print('Run scan')
+
+    for git_repo_path in _run_scan(args, search_folder):
+        # print(git_repo_path)
+        run_update(cfg, git_repo_path)
+
+
+def run_update(cfg: DittoConfig, destination_folder: str):
+    assert os.path.isdir(os.path.join(destination_folder, '.git'))
 
     # print some user headers
     if cfg.updates_present:
         print()
-        print("Configuration updates")
+        print(f"Configuration updates ({destination_folder})")
         print()
 
     # apply the configuration to the clone
@@ -114,3 +173,26 @@ def main():
         cmd = ['git', 'config', 'user.signingkey', cfg.signing_key]
         subprocess.check_call(cmd, cwd=destination_folder)
         print(f'Set user signing key to: {cfg.signing_key}')
+
+
+def main():
+    args = parse_commandline()
+    cfg = load_ditto_config()
+
+    url, destination_folder = args.url
+
+    if url == 'update':
+        run_update(cfg, destination_folder)
+        return
+    elif url == 'scan':
+        run_scan(args, cfg, destination_folder)
+        return
+
+    # print a nice user header
+    print(HEADER)
+
+    # clone the folder
+    cmd = ['git', 'clone', url]
+    subprocess.check_call(cmd)
+
+    run_update(cfg, destination_folder)
