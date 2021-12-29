@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import argparse
-import re
 import subprocess
 
 from accoutrements import detect_upstream_remote, detect_master_branch

@@ -1,7 +1,8 @@
 import argparse
 import subprocess
-from ..colours import yellow, blue
 from typing import Optional, Tuple, Set
+
+from ..colours import yellow
 
 
 def parse_commandline() -> argparse.Namespace:

@@ -49,3 +49,6 @@ signingkey = "<insert signing key>"
 
 Deletes both local and remove copies of a branch
 
+## git rel
+
+Creates a new signed or annotated tag and pushes it up to the upstream repo.

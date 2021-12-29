@@ -30,7 +30,7 @@ def detect_stale_branches():
 
         if match is None:
             print('Match failure: "{}"'.format(line))
-            continue # doesn't match what we are looking for
+            continue  # doesn't match what we are looking for
 
         if match.group(2) is not None:
             stale_branches.add(match.group(1))

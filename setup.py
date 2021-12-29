@@ -43,7 +43,7 @@ setup(
 
     extras_require={
         'dev': ['check-manifest'],
-        'test': ['coverage'],
+        'test': ['coverage', 'pytest'],
     },
 
     entry_points={
@@ -55,6 +55,7 @@ setup(
             'git-bugfix=accoutrements.cmd.bugfix:main',
             'git-del=accoutrements.cmd.del:main',
             'git-ditto=accoutrements.cmd.ditto:main',
+            'git-rel=accoutrements.cmd.rel:main',
         ],
     },
 
