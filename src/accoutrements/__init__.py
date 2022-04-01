@@ -1,6 +1,7 @@
 import re
 import subprocess
 import sys
+from typing import Set, Optional
 
 STALE_REGEX = re.compile(r'(?:\*?\s+)?([\w/\-.]+)\s+[0-9a-f]+ (?:\[[\w/\-.]+(: gone)?])?.*')
 
@@ -38,7 +39,7 @@ def detect_stale_branches():
     return stale_branches
 
 
-def detect_master_branch(remote: str) -> str:
+def build_remote_branch_set(remote: str) -> Set[str]:
     matcher = re.compile(r'^\s+(\w+)/(\w+)')
 
     remote_branches = set()
@@ -54,8 +55,24 @@ def detect_master_branch(remote: str) -> str:
         if branch_remote == remote:
             remote_branches.add(branch_name)
 
+    return remote_branches
+
+
+def detect_master_branch(remote: str) -> str:
+    remote_branches = build_remote_branch_set(remote)
+
     for master_name in ('master', 'main', 'trunk'):
         if master_name in remote_branches:
             return master_name
 
     raise RuntimeError(f'Unable to detect master branch name: {",".join(list(sorted(remote_branches)))}')
+
+
+def detect_develop_branch(remote: str) -> Optional[str]:
+    remote_branches = build_remote_branch_set(remote)
+
+    for develop_name in ('develop',):
+        if develop_name in remote_branches:
+            return develop_name
+
+    return None
