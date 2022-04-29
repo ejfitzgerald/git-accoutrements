@@ -1,0 +1,46 @@
+[tool.poetry]
+name = "git-accoutrements"
+version = "0.1.0"
+description = "A collection of tools to help with a git based development workflow"
+readme = "READNE.md"
+authors = ["Ed FitzGerald <ejafitzgerald@gmail.com>"]
+license = "MIT"
+homepage = "https://github.com/ejfitzgerald/git-accoutrements"
+repository = "https://github.com/ejfitzgerald/git-accoutrements"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3 :: Only",
+]
+
+[tool.poetry.urls]
+"Bug Reports" = "https://github.com/ejfitzgerald/git-accoutrements/issues"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+toml = "^0.10.2"
+colored = "^1.4.3"
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.1.2"
+coverage = "^6.3.2"
+
+[tool.poetry.scripts]
+git-feature = "accoutrements.cmd.feature:main"
+git-master = "accoutrements.cmd.master:main"
+git-chore = "accoutrements.cmd.chore:main"
+git-tidy = "accoutrements.cmd.tidy:main"
+git-bugfix = "accoutrements.cmd.bugfix:main"
+git-del = "accoutrements.cmd.del:main"
+git-ditto = "accoutrements.cmd.ditto:main"
+git-rel = "accoutrements.cmd.rel:main"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
