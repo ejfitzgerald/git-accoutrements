@@ -33,14 +33,14 @@ pytest = "^7.1.2"
 coverage = "^6.3.2"
 
 [tool.poetry.scripts]
-git-feature = "accoutrements.cmd.feature:main"
-git-master = "accoutrements.cmd.master:main"
-git-chore = "accoutrements.cmd.chore:main"
-git-tidy = "accoutrements.cmd.tidy:main"
-git-bugfix = "accoutrements.cmd.bugfix:main"
-git-del = "accoutrements.cmd.del:main"
-git-ditto = "accoutrements.cmd.ditto:main"
-git-rel = "accoutrements.cmd.rel:main"
+"git-feature" = "accoutrements.cmd.feature:main"
+"git-master" = "accoutrements.cmd.master:main"
+"git-chore" = "accoutrements.cmd.chore:main"
+"git-tidy" = "accoutrements.cmd.tidy:main"
+"git-bugfix" = "accoutrements.cmd.bugfix:main"
+"git-del" = "accoutrements.cmd.del:main"
+"git-ditto" = "accoutrements.cmd.ditto:main"
+"git-rel" = "accoutrements.cmd.rel:main"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
