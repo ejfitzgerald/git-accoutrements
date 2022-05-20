@@ -23,6 +23,8 @@ delete them. Quite useful when working on projects that user Github Flow.
 
 ## git ditto
 
+### Cloning a repo
+
 A simple replacement for the git clone command, however it will scan up through the filesystem looking 
 a file called `.git-ditto.toml`. This file can be used to store configuration updates that should be
 applied after the clone.
@@ -43,6 +45,21 @@ Example `.git-ditto.toml`
 name = "<insert name here>"
 email = "<insert email here>"
 signingkey = "<insert signing key>"
+```
+
+### Updating the user information
+
+Additionally, the `git ditto` command can be used to update existing checkouts. Either a single repo by exectuting the
+following command in the checkout
+
+```bash
+$ git ditto update
+```
+
+Or additionally on all git checkouts inside a folder using the following command
+
+```bash
+$ git ditto scan
 ```
 
 ## git del

@@ -4,7 +4,7 @@ import re
 import subprocess
 import sys
 from dataclasses import dataclass
-from typing import Optional, Tuple
+from typing import Optional, Tuple, List
 
 import toml
 
@@ -88,7 +88,10 @@ def parse_commandline() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def _filter_folder(root: str, path: str):
+def _filter_folder(root: str, path: Optional[str]):
+    if path is None:
+        return False
+
     full_path = os.path.join(root, path)
 
     if not os.path.isdir(full_path):
@@ -101,6 +104,14 @@ def _filter_folder(root: str, path: str):
         return False
 
     return True
+
+
+def _list_folder(path) -> List[Optional[str]]:
+    try:
+        return os.listdir(path)
+    except PermissionError:
+        print(f'Unable to read folder {path}')
+        return [None]
 
 
 def _run_scan(args: argparse.Namespace, path: str):
@@ -135,7 +146,7 @@ def _run_scan(args: argparse.Namespace, path: str):
                 lambda x: os.path.join(current, x),  # add the current prefix
                 filter(
                     lambda x: _filter_folder(current, x),
-                    os.listdir(current)
+                    _list_folder(current)
                 )
             )
         )
