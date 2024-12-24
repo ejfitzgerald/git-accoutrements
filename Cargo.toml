@@ -1,5 +1,5 @@
 [package]
-name = "git-accoutrements"
+name = "accoutrements"
 version = "0.1.0"
 edition = "2021"
 

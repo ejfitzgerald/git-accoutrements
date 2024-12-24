@@ -1,6 +1,6 @@
 use anyhow::Result;
 use clap::Parser;
-use git_accoutrements::{detect_stale_branches, run_git_command};
+use accoutrements::{detect_stale_branches, run_git_command, wait_for_confirmation};
 
 #[derive(Parser, Debug)]
 #[command(version, about, long_about = None)]
@@ -25,11 +25,9 @@ fn main() -> Result<()> {
     for branch in &stale_branches {
         println!(" - {}", branch);
     }
-    println!("press enter to continue");
 
-    let mut buffer = String::new();
-    let stdin = std::io::stdin(); // We get `Stdin` here.
-    stdin.read_line(&mut buffer)?;
+    // wait for the user confirmation
+    wait_for_confirmation()?;
 
     // delete all the branches
     for branch in stale_branches {
