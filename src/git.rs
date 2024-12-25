@@ -102,3 +102,7 @@ pub fn push_tag(remote: &str, tag: &str) -> anyhow::Result<()> {
 
     Ok(())
 }
+
+pub fn has_working_changes() -> bool {
+    run_git_command(&["diff", "--exit-code"]).is_err()
+}
