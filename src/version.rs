@@ -196,7 +196,7 @@ impl TryFrom<&str> for Version {
 }
 
 pub fn get_next_version(current_version: &str, increment: Increment) -> anyhow::Result<Version> {
-    let version = Version::try_from(current_version).unwrap_or_else(|_| Version {
+    let version = Version::try_from(current_version).unwrap_or(Version {
         major: 0,
         minor: 0,
         patch: 0,
