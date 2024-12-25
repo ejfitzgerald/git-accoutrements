@@ -1,6 +1,6 @@
+use accoutrements::{detect_stale_branches, run_git_command, wait_for_confirmation};
 use anyhow::Result;
 use clap::Parser;
-use accoutrements::{detect_stale_branches, run_git_command, wait_for_confirmation};
 
 #[derive(Parser, Debug)]
 #[command(version, about, long_about = None)]

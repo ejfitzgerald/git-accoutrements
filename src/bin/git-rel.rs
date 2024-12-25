@@ -1,6 +1,9 @@
+use accoutrements::{
+    create_tag, detect_upstream_remote, get_current_version, get_next_version, push_tag,
+    wait_for_confirmation, Increment,
+};
 use anyhow::Result;
 use clap::Parser;
-use accoutrements::{get_current_version, Increment, get_next_version, wait_for_confirmation, detect_upstream_remote, run_git_command, create_tag, push_tag};
 
 #[derive(Parser, Debug)]
 #[command(version, about, long_about = None)]
@@ -41,4 +44,3 @@ fn main() -> Result<()> {
 
     Ok(())
 }
-

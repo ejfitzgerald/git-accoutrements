@@ -1,9 +1,9 @@
-mod version;
-mod utils;
-mod git;
 mod actions;
+mod git;
+mod utils;
+mod version;
 
-pub use version::*;
-pub use utils::*;
-pub use git::*;
 pub use actions::*;
+pub use git::*;
+pub use utils::*;
+pub use version::*;

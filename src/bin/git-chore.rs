@@ -1,5 +1,5 @@
-use clap::Parser;
 use accoutrements::checkout_new_development_branch;
+use clap::Parser;
 
 #[derive(Parser, Debug)]
 #[command(version, about, long_about = None)]

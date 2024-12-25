@@ -1,4 +1,3 @@
-
 pub fn wait_for_confirmation() -> anyhow::Result<()> {
     println!("press enter to continue");
 

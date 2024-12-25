@@ -109,7 +109,7 @@ impl Version {
                         patch += 1;
 
                         PreRelease::Alpha
-                    },
+                    }
                 };
 
                 pre_release = Some(PreReleaseInfo {
@@ -130,7 +130,7 @@ impl Version {
                             pre_release: PreRelease::Alpha,
                             number: 1,
                         }
-                    },
+                    }
                 };
 
                 pre_release = Some(next_pre_release);
@@ -233,7 +233,11 @@ mod tests {
             ("v0.9.1-rc1", Increment::Patch, "v0.9.2"),
             ("v0.0.3beta9-1-ga4578d1", Increment::Pre, "v0.0.3-rc.1"),
             ("v0.0.3beta9-1-ga4578d1-wip", Increment::Pre, "v0.0.3-rc.1"),
-            ("v0.0.3-beta9-1-ga4578d1-dirty", Increment::Pre, "v0.0.3-rc.1"),
+            (
+                "v0.0.3-beta9-1-ga4578d1-dirty",
+                Increment::Pre,
+                "v0.0.3-rc.1",
+            ),
             ("v10.12.13", Increment::Pre, "v10.12.14-alpha.1"),
             ("v1.2.3alpha1", Increment::Pre, "v1.2.3-beta.1"),
             ("v0.0.1-3-gef14a4a", Increment::Pre, "v0.0.2-alpha.1"),

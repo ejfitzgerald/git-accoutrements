@@ -1,5 +1,5 @@
-use anyhow::bail;
 use crate::{detect_master_branch, detect_upstream_remote, has_working_changes, run_git_command};
+use anyhow::bail;
 
 pub fn checkout_new_development_branch(prefix: &str, names: Vec<String>) -> anyhow::Result<()> {
     // check if the working copy has uncommitted changes

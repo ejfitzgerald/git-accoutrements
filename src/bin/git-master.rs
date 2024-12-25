@@ -1,6 +1,6 @@
+use accoutrements::{detect_master_branch, detect_upstream_remote, run_git_command};
 use anyhow::Result;
 use clap::Parser;
-use accoutrements::{detect_master_branch, detect_upstream_remote, run_git_command};
 
 #[derive(Parser, Debug)]
 #[command(version, about, long_about = None)]
